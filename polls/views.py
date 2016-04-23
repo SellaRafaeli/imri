@@ -1,3 +1,4 @@
+import django
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.core.urlresolvers import reverse
@@ -7,10 +8,15 @@ from django.core import serializers
 
 from .models import Choice, Question
 
-def to_json(model):
-    res = serializers.serialize('json', [ model, ])
-    import code; code.interact(local=locals())
-    res['fields']
+def to_json(model):    
+    #import code; code.interact(local=locals())
+    if (django.db.models.query.QuerySet == model.__class__):
+      data = model
+    else:
+      data = [model]
+    
+    res = serializers.serialize('json', data)
+    return res
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -35,6 +41,7 @@ class ResultsView(generic.DetailView):
 
 def json(request):
     q = get_object_or_404(Question, pk=1)
+    q = Question.objects.all()
     res = to_json(q)
     return HttpResponse(res, content_type='application/json')
 

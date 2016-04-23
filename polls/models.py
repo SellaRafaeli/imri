@@ -4,6 +4,7 @@
 
 # # Create your models here.
 
+# to import: >>> from polls.models import *
 import datetime
 
 from django.db import models
