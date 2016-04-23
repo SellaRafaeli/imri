@@ -1,0 +1,11 @@
+{# bla #}
+(admin_base_site_locator)
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Imri site admin') }}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Imri administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
